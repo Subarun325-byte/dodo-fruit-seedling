@@ -19,10 +19,26 @@ themeToggle.addEventListener('click', () => {
 // Mobile Menu Toggle
 const mobileMenu = document.querySelector('.mobile-menu');
 const navLinks = document.querySelector('.nav-links');
+const navActions = document.querySelector('.nav-actions');
 
 if (mobileMenu) {
     mobileMenu.addEventListener('click', () => {
         navLinks.classList.toggle('active');
+        navActions.classList.toggle('active');
+        const icon = mobileMenu.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+    
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            navActions.classList.remove('active');
+            const icon = mobileMenu.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+        });
     });
 }
 
@@ -91,16 +107,37 @@ style.textContent = `
     .nav-links.active {
         display: flex !important;
         position: absolute;
-        top: 80px;
+        top: 70px;
         left: 0;
         right: 0;
         background: rgba(15, 23, 42, 0.98);
         flex-direction: column;
         padding: 20px;
-        gap: 20px;
+        gap: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     body.light-mode .nav-links.active {
         background: rgba(248, 250, 252, 0.98);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .nav-actions.active {
+        display: flex !important;
+        position: absolute;
+        top: calc(70px + 160px);
+        left: 0;
+        right: 0;
+        background: rgba(15, 23, 42, 0.98);
+        justify-content: center;
+        padding: 16px 20px;
+        gap: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    body.light-mode .nav-actions.active {
+        background: rgba(248, 250, 252, 0.98);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .mobile-menu i.fa-times {
+        color: var(--primary);
     }
 `;
 document.head.appendChild(style);
